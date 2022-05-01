@@ -11,8 +11,10 @@ public class Tarefa implements Serializable {
         this.id = id;
     }
 
-    public Tarefa(String nome) {
-        this.nome = nome;
+    public  Tarefa() {}
+
+    public Tarefa(String tarefaNome) {
+        this.nome = tarefaNome;
     }
 
     public String getNome() {

@@ -1,5 +1,6 @@
 package com.example.listatarefas.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,7 @@ public class ListaTarefaAdapter extends RecyclerView.Adapter<ListaTarefaAdapter.
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Tarefa tarefa = listaTarefa.get(position);
-        holder.textView.setText(tarefa.getNome());
+        holder.textView.setText( tarefa.getNome());
     }
 
     @Override

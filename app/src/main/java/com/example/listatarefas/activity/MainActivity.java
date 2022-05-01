@@ -22,6 +22,7 @@ import com.example.listatarefas.adapter.ListaTarefaAdapter;
 import com.example.listatarefas.databinding.ActivityMainBinding;
 import com.example.listatarefas.helper.DBHelper;
 import com.example.listatarefas.helper.RecyclerItemClickListener;
+import com.example.listatarefas.helper.TarefaDAO;
 import com.example.listatarefas.model.Tarefa;
 
 import android.view.Menu;
@@ -72,6 +73,20 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
 
+
+        dbHelper = new DBHelper(getApplicationContext());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        carregarTarefas();
+    }
+
+    public void carregarTarefas() {
+        TarefaDAO tarefaDAO = new TarefaDAO(getApplicationContext());
+        tarefas = tarefaDAO.listar();
+
         ListaTarefaAdapter adapter = new ListaTarefaAdapter(tarefas);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -84,19 +99,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        dbHelper = new DBHelper(getApplicationContext());
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        carregarTarefas();
-    }
-
-    public void carregarTarefas() {
-        Tarefa _tarefa = new Tarefa("tt", 1);
-        tarefas.add(_tarefa);
     }
 
     @Override
