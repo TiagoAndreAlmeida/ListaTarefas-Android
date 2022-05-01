@@ -20,10 +20,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listatarefas.adapter.ListaTarefaAdapter;
 import com.example.listatarefas.databinding.ActivityMainBinding;
+import com.example.listatarefas.helper.RecyclerItemClickListener;
 import com.example.listatarefas.model.Tarefa;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +48,29 @@ public class MainActivity extends AppCompatActivity {
 
         View view = findViewById(R.id.constrainLayout);
         recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(getApplicationContext(), "CLICK", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+                Toast.makeText(getApplicationContext(), "LONGGG", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        }));
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
 
-        ListaTarefaAdapter adapter = new ListaTarefaAdapter();
+        ListaTarefaAdapter adapter = new ListaTarefaAdapter(tarefas);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
@@ -65,6 +84,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         carregarTarefas();
     }
 
