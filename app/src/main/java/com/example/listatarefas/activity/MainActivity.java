@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listatarefas.adapter.ListaTarefaAdapter;
 import com.example.listatarefas.databinding.ActivityMainBinding;
+import com.example.listatarefas.helper.DBHelper;
 import com.example.listatarefas.helper.RecyclerItemClickListener;
 import com.example.listatarefas.model.Tarefa;
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
+    private DBHelper dbHelper;
     private RecyclerView recyclerView;
     private List<Tarefa> tarefas = new ArrayList<>();
 
@@ -75,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        dbHelper = new DBHelper(getApplicationContext());
     }
 
     @Override
