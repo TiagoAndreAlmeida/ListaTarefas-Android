@@ -51,10 +51,16 @@ public class MainActivity extends AppCompatActivity {
 
         View view = findViewById(R.id.constrainLayout);
         recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getApplicationContext(), recyclerView,
+                        new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getApplicationContext(), "CLICK", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), AdicionarTarefa.class);
+                Tarefa tarefaSelecionada = tarefas.get(position);
+
+                intent.putExtra("selecionada", tarefaSelecionada);
+                startActivity(intent);
             }
 
             @Override
