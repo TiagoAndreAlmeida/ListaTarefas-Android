@@ -1,5 +1,8 @@
 package com.example.listatarefas.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -65,7 +68,25 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLongItemClick(View view, int position) {
-                Toast.makeText(getApplicationContext(), "LONGGG", Toast.LENGTH_LONG).show();
+                Tarefa tarefa = tarefas.get(position);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                dialog.setTitle("Confirmar exclusão");
+                dialog.setMessage("Deseja apagar "+tarefa.getNome()+ " ?");
+                dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        TarefaDAO tarefaDAO = new TarefaDAO(getApplicationContext());
+                        Boolean deleteou = tarefaDAO.deletar(tarefa);
+                        if(deleteou) {
+                            Toast.makeText(getApplicationContext(), "Deletado com sucesso", Toast.LENGTH_SHORT).show();
+                            carregarTarefas();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Deu ruim", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                dialog.setNegativeButton("Não", null);
+                dialog.show();
             }
 
             @Override
